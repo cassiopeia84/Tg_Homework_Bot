@@ -119,7 +119,7 @@ def watch_subject(message):
 				bot.send_message(message.from_user.id, text[0])
 	except(Exception, psycopg2.Error) as error:
 		bot.send_message(message.from_user.id, "Вы ввели данные в неверном формате\nПример правильной записи: 01.01.22\nВозможно, вы нажали кнопку на старой панели. Для корректной работы, вызовите команду ещё раз")
-		#print(f"INFO: {error} in function watch_subject")
+		print(f"INFO: {error} in function watch_subject")
 
 
 def write_subject(message):
@@ -162,7 +162,7 @@ def delete_subject(message):
 
 	except:
 		bot.send_message(message.from_user.id, "Вы ввели данные в неверном формате\nПример правильной записи: 01.01.22 №1,2,3\nВозможно, на данную дату не записано домашнее задание")
-		#print(f"INFO: {error} in function delete_subject")
+		print(f"INFO: {error} in function delete_subject")
 
 @bot.message_handler(commands=['watch_all'])
 def show_all(message):
