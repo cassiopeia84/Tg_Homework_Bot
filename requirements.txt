@@ -3,4 +3,3 @@ lxml == 4.6.3
 pyTelegramBotAPI == 4.0.1
 psycopg2 == 2.9.3
 requests == 2.26.0
-

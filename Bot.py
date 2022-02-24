@@ -160,7 +160,7 @@ def delete_subject(message):
 			cursor.execute("DELETE FROM tg_homework WHERE homework_id = %s;", [hw_id])
 		bot.send_message(message.from_user.id, "Данные удалены")
 
-	except:
+	except(Exception, psycopg2.Error) as error:
 		bot.send_message(message.from_user.id, "Вы ввели данные в неверном формате\nПример правильной записи: 01.01.22 №1,2,3\nВозможно, на данную дату не записано домашнее задание")
 		print(f"INFO: {error} in function delete_subject")
 
