@@ -99,7 +99,7 @@ def watch_subject(message):
 
 	try:
 		date = datetime.strptime(message.text, "%d.%m.%y").date()
-		cursor.execute(f"SELECT homework_id FROM tg_homework WHERE user_Id = %s", [message.from_user.id])
+		cursor.execute(f"SELECT homework_id FROM tg_homework WHERE user_id = %s", [message.from_user.id])
 		all_hw_id_list = cursor.fetchall()
 
 		hw_text = []
@@ -188,7 +188,7 @@ def show_all(message):
 	try:
 		send = ""
 		for date in dates:
-			cursor.execute("SELECT homework_id FROM tg_homework WHERE user_Id = %s;", [message.from_user.id])
+			cursor.execute("SELECT homework_id FROM tg_homework WHERE user_id = %s;", [message.from_user.id])
 			with_tuples = cursor.fetchall()
 			ids = tuple(tup_date[0] for tup_date in with_tuples)
 			if ids != ():
@@ -211,11 +211,11 @@ def show_all(message):
 @bot.message_handler(commands=['delete_all'])
 def del_all(message):
 	try:
-		cursor.execute("SELECT homework_id FROM tg_homework WHERE user_Id = %s;", [message.from_user.id])
+		cursor.execute("SELECT homework_id FROM tg_homework WHERE user_id = %s;", [message.from_user.id])
 		homework_ids = cursor.fetchall()
 		for homework_id in homework_ids:
 			cursor.execute("DELETE FROM homework WHERE homework_id = %s;", [homework_id])
-		cursor.execute("DELETE FROM tg_homework WHERE user_Id = %s;", [message.from_user.id])
+		cursor.execute("DELETE FROM tg_homework WHERE user_id = %s;", [message.from_user.id])
 		bot.send_message(message.from_user.id, "Все домашние задания удалены")
 	except(Exception, psycopg2.Error) as error:
 		bot.send_message(message.from_user.id, "Упс... Что-то пошло не так 	😕")
@@ -235,7 +235,7 @@ def watch_tomorrow_hw(message):
 		elif date.day == 5:
 			date = date + timedelta(days=2)
 
-		cursor.execute("SELECT homework_id FROM tg_homework WHERE user_Id = %s;", [message.from_user.id])
+		cursor.execute("SELECT homework_id FROM tg_homework WHERE user_id = %s;", [message.from_user.id])
 		bad_homework_ids = cursor.fetchall()
 		homework_ids = tuple(hw_id[0] for hw_id in bad_homework_ids)
 
