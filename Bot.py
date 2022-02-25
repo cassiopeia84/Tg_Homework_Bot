@@ -96,7 +96,7 @@ def buttons(call):
 		bot.register_next_step_handler(call.message, delete_subject)
 
 def watch_subject(message):
-	names = {'mathematics': "Математика", 'physics': "физика", 'biology': "Биология", 'chemistry': "Химия",
+	names = {'mathematics': "Математика", 'physics': "Физика", 'biology': "Биология", 'chemistry': "Химия",
 			 'it': "Информатика", 'geography': "География", 'russian': "Русский язык", 'literature': "Литература",
 			 'history': "История", 'english': "Английский язык", 'law': "Право", 'social_sciense': "Обществознание",
 			 'economics': "Экономика", 'psychology': "Психология", 'lsf': "ОБЖ"}
@@ -108,7 +108,7 @@ def watch_subject(message):
 		hw_text = []
 		for hw_id_1 in all_hw_id_list:
 			for hw_id in hw_id_1:
-				cursor.execute(f"""SELECT hw_text FROM homework WHERE homework_id = %s AND lesson_name = %s AND hw_date = %s""", [hw_id, names[subject], date])
+				cursor.execute(f"""SELECT hw_text FROM homework WHERE homework_id = %s AND lesson_name = %s AND hw_date = %s""", [hw_id, names[subject].lower(), date])
 				hw_text.append(cursor.fetchall())
 
 		while [] in hw_text:
@@ -126,7 +126,7 @@ def watch_subject(message):
 
 
 def write_subject(message):
-	names = {'mathematics': "Математика", 'physics': "физика", 'biology': "Биология", 'chemistry': "Химия",
+	names = {'mathematics': "Математика", 'physics': "Физика", 'biology': "Биология", 'chemistry': "Химия",
 			 'it': "Информатика", 'geography': "География", 'russian': "Русский язык", 'literature': "Литература",
 			 'history': "История", 'english': "Английский язык", 'law': "Право", 'social_sciense': "Обществознание",
 			 'economics': "Экономика", 'psychology': "Психология", 'lsf': "ОБЖ"}
@@ -136,18 +136,18 @@ def write_subject(message):
 		date_txt, text = splitted[0], splitted[1]
 		date = datetime.strptime(date_txt, "%d.%m.%y").date()
 
-		cursor.execute("SELECT homework_id FROM homework WHERE lesson_name = %s AND hw_date = %s", [names[subject], date])
+		cursor.execute("SELECT homework_id FROM homework WHERE lesson_name = %s AND hw_date = %s", [names[subject].lower(), date])
 		curs = cursor.fetchall()
 		if curs != []:
 			hw_id = curs[0][0]
-			cursor.execute("SELECT hw_text FROM homework WHERE lesson_name = %s AND hw_date = %s", [names[subject], date])
+			cursor.execute("SELECT hw_text FROM homework WHERE lesson_name = %s AND hw_date = %s", [names[subject].lower(), date])
 			hw_txt = cursor.fetchall()[0][0]
 
 			text = hw_txt + ", " + text
-			cursor.execute("DELETE FROM homework WHERE lesson_name = %s AND hw_date = %s", [names[subject], date])
+			cursor.execute("DELETE FROM homework WHERE lesson_name = %s AND hw_date = %s", [names[subject].lower(), date])
 			cursor.execute("DELETE FROM tg_homework WHERE homework_id = %s", [hw_id])
 
-		cursor.execute("INSERT INTO homework VALUES (%s, %s, %s, %s);", [homework_id, names[subject], date, text])
+		cursor.execute("INSERT INTO homework VALUES (%s, %s, %s, %s);", [homework_id, names[subject].lower(), date, text])
 
 		cursor.execute("INSERT INTO tg_homework VALUES (%s, %s);", [message.from_user.id, homework_id])
 		bot.send_message(message.from_user.id, "Дз записано")
@@ -157,15 +157,15 @@ def write_subject(message):
 		print(f"INFO: {error} in function write_subject")
 
 def delete_subject(message):
-	names = {'mathematics': "Математика", 'physics': "физика", 'biology': "Биология", 'chemistry': "Химия",
+	names = {'mathematics': "Математика", 'physics': "Физика", 'biology': "Биология", 'chemistry': "Химия",
 			 'it': "Информатика", 'geography': "География", 'russian': "Русский язык", 'literature': "Литература",
 			 'history': "История", 'english': "Английский язык", 'law': "Право", 'social_sciense': "Обществознание",
 			 'economics': "Экономика", 'psychology': "Психология", 'lsf': "ОБЖ"}
 	try:
 		date = datetime.strptime(message.text, "%d.%m.%y").date()
-		cursor.execute("SELECT homework_id FROM homework WHERE lesson_name = %s AND hw_date = %s;", [names[subject], date])
+		cursor.execute("SELECT homework_id FROM homework WHERE lesson_name = %s AND hw_date = %s;", [names[subject].lower(), date])
 		homework_id = cursor.fetchall()
-		cursor.execute("DELETE FROM homework WHERE lesson_name = %s AND hw_date = %s;", [names[subject], date])
+		cursor.execute("DELETE FROM homework WHERE lesson_name = %s AND hw_date = %s;", [names[subject].lower(), date])
 		for hw_id in homework_id:
 			cursor.execute("DELETE FROM tg_homework WHERE homework_id = %s;", [hw_id])
 		bot.send_message(message.from_user.id, "Данные удалены")
@@ -176,7 +176,7 @@ def delete_subject(message):
 
 @bot.message_handler(commands=['watch_all'])
 def show_all(message):
-	names = {'mathematics': "Математика", 'physics': "физика", 'biology': "Биология", 'chemistry': "Химия",
+	names = {'mathematics': "Математика", 'physics': "Физика", 'biology': "Биология", 'chemistry': "Химия",
 			 'it': "Информатика", 'geography': "География", 'russian': "Русский язык", 'literature': "Литература",
 			 'history': "История", 'english': "Английский язык", 'law': "Право", 'social_sciense': "Обществознание",
 			 'economics': "Экономика", 'psychology': "Психология", 'lsf': "ОБЖ"}
@@ -208,7 +208,7 @@ def show_all(message):
 				homeworks = []
 			send += f"Дз на {date}:\n"
 			for lesson_hw in homeworks:
-				send += f"\t\t\t•{lesson_hw[0]}: {lesson_hw[1]}\n"
+				send += f"\t\t\t•{lesson_hw[0].capitalize()}: {lesson_hw[1]}\n"
 			if homeworks == []:
 				send += "\t\t\tНичего не задано\n"
 			send += "\n"
@@ -234,7 +234,7 @@ def del_all(message):
 @bot.message_handler(commands=['tomorrow_hw'])
 def watch_tomorrow_hw(message):
 	try:
-		names = {'mathematics': "Математика", 'physics': "физика", 'biology': "Биология", 'chemistry': "Химия",
+		names = {'mathematics': "Математика", 'physics': "Физика", 'biology': "Биология", 'chemistry': "Химия",
 				 'it': "Информатика", 'geography': "География", 'russian': "Русский язык", 'literature': "Литература",
 				 'history': "История", 'english': "Английский язык", 'law': "Право", 'social_sciense': "Обществознание",
 				 'economics': "Экономика", 'psychology': "Психология", 'lsf': "ОБЖ"}
@@ -262,7 +262,7 @@ def watch_tomorrow_hw(message):
 				lesson = homework.split(',', 1)[0]
 				text = homework.split(',', 1)[1]
 
-				send += f"{lesson}: {text}\n"
+				send += f"{lesson.capitalize()}: {text}\n"
 			if send == f"Дз на {date}:\n\n":
 				send = "На завтра ничего не задано"
 			bot.send_message(message.from_user.id, send)
