@@ -276,7 +276,7 @@ def watch_tomorrow_schedule(message):
 			course = cursor.fetchall()
 			tom_sched = schedule[str(course[0][0])]
 
-			bot.send_message(message.from_user.id, f"Расписание на {tom_date}")
+			bot.send_message(message.from_user.id, f"Расписание на {tom_date.date()}")
 			k, for_send = 1, ""
 			while "" in tom_sched:
 				tom_sched.remove("")
