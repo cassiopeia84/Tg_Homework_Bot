@@ -271,12 +271,13 @@ def watch_tomorrow_schedule(message):
 			tom_date = tom_date + timedelta(days=2)
 
 		schedule = Parser.get_schedule(tom_date)
+		tom_date = tom_date.date()
 		if schedule != "Schedule not posted for the selected date" and schedule != "No lessons on weekends":
 			cursor.execute("SELECT course_name FROM tg_user WHERE user_id = %s;", [message.from_user.id])
 			course = cursor.fetchall()
 			tom_sched = schedule[str(course[0][0])]
 
-			bot.send_message(message.from_user.id, f"Расписание на {tom_date.date()}")
+			bot.send_message(message.from_user.id, f"Расписание на {tom_date}")
 			k, for_send = 1, ""
 			while "" in tom_sched:
 				tom_sched.remove("")
