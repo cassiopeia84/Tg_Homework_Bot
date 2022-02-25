@@ -96,7 +96,7 @@ def buttons(call):
 		bot.register_next_step_handler(call.message, delete_subject)
 
 def watch_subject(message):
-	names = {'mathematics': "Математика", 'physics': "Физика", 'biology': "Биология", 'chemistry': "Химия",
+	names = {'mathematics': "Математика", 'physics': "физика", 'biology': "Биология", 'chemistry': "Химия",
 			 'it': "Информатика", 'geography': "География", 'russian': "Русский язык", 'literature': "Литература",
 			 'history': "История", 'english': "Английский язык", 'law': "Право", 'social_sciense': "Обществознание",
 			 'economics': "Экономика", 'psychology': "Психология", 'lsf': "ОБЖ"}
@@ -126,7 +126,7 @@ def watch_subject(message):
 
 
 def write_subject(message):
-	names = {'mathematics': "Математика", 'physics': "Физика", 'biology': "Биология", 'chemistry': "Химия",
+	names = {'mathematics': "Математика", 'physics': "физика", 'biology': "Биология", 'chemistry': "Химия",
 			 'it': "Информатика", 'geography': "География", 'russian': "Русский язык", 'literature': "Литература",
 			 'history': "История", 'english': "Английский язык", 'law': "Право", 'social_sciense': "Обществознание",
 			 'economics': "Экономика", 'psychology': "Психология", 'lsf': "ОБЖ"}
@@ -157,7 +157,7 @@ def write_subject(message):
 		print(f"INFO: {error} in function write_subject")
 
 def delete_subject(message):
-	names = {'mathematics': "Математика", 'physics': "Физика", 'biology': "Биология", 'chemistry': "Химия",
+	names = {'mathematics': "Математика", 'physics': "физика", 'biology': "Биология", 'chemistry': "Химия",
 			 'it': "Информатика", 'geography': "География", 'russian': "Русский язык", 'literature': "Литература",
 			 'history': "История", 'english': "Английский язык", 'law': "Право", 'social_sciense': "Обществознание",
 			 'economics': "Экономика", 'psychology': "Психология", 'lsf': "ОБЖ"}
@@ -176,7 +176,7 @@ def delete_subject(message):
 
 @bot.message_handler(commands=['watch_all'])
 def show_all(message):
-	names = {'mathematics': "Математика", 'physics': "Физика", 'biology': "Биология", 'chemistry': "Химия",
+	names = {'mathematics': "Математика", 'physics': "физика", 'biology': "Биология", 'chemistry': "Химия",
 			 'it': "Информатика", 'geography': "География", 'russian': "Русский язык", 'literature': "Литература",
 			 'history': "История", 'english': "Английский язык", 'law': "Право", 'social_sciense': "Обществознание",
 			 'economics': "Экономика", 'psychology': "Психология", 'lsf': "ОБЖ"}
@@ -234,7 +234,7 @@ def del_all(message):
 @bot.message_handler(commands=['tomorrow_hw'])
 def watch_tomorrow_hw(message):
 	try:
-		names = {'mathematics': "Математика", 'physics': "Физика", 'biology': "Биология", 'chemistry': "Химия",
+		names = {'mathematics': "Математика", 'physics': "физика", 'biology': "Биология", 'chemistry': "Химия",
 				 'it': "Информатика", 'geography': "География", 'russian': "Русский язык", 'literature': "Литература",
 				 'history': "История", 'english': "Английский язык", 'law': "Право", 'social_sciense': "Обществознание",
 				 'economics': "Экономика", 'psychology': "Психология", 'lsf': "ОБЖ"}
