@@ -240,6 +240,7 @@ def watch_tomorrow_hw(message):
 				 'economics': "Экономика", 'psychology': "Психология", 'lsf': "ОБЖ"}
 
 		date = datetime.today().date() + timedelta(days=1)
+		print(f"CHECK: {date}, {date.day}")
 		if date.day == 6:
 			date = date + timedelta(days=1)
 			print("CHECK: Залетели")
