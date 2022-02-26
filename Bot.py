@@ -240,25 +240,21 @@ def watch_tomorrow_hw(message):
 				 'economics': "Экономика", 'psychology': "Психология", 'lsf': "ОБЖ"}
 
 		date = datetime.today().date() + timedelta(days=1)
-		print(f"CHECK: {date}, {date.day}")
-		if date.day == 6:
+		if date.weekday() == 6:
 			date = date + timedelta(days=1)
-			print("CHECK: Залетели")
-		elif date.day == 5:
+		elif date.weekday() == 5:
 			date = date + timedelta(days=2)
 
 		cursor.execute("SELECT homework_id FROM tg_homework WHERE user_id = %s;", [message.from_user.id])
 		bad_homework_ids = cursor.fetchall()
-		print(f"CHECK: {bad_homework_ids}")
 		homework_ids = tuple(hw_id[0] for hw_id in bad_homework_ids)
-		print(f"CHECK: {homework_ids}")
+
 		if homework_ids == ():
 			bot.send_message(message.from_user.id, f"На {date} ничего не задано")
 		else:
 			cursor.execute("SELECT (lesson_name, hw_text) FROM homework WHERE homework_id IN %s AND hw_date = %s;", [homework_ids, date])
 			bad_tomorrow_homework = cursor.fetchall()
 			tomorrow_homework = tuple(hw[0] for hw in bad_tomorrow_homework)
-			print(f"CHECK: {tomorrow_homework}")
 			send = f"Дз на {date}:\n\n"
 			for homework in tomorrow_homework:
 				homework = homework[1:-1]
@@ -266,7 +262,6 @@ def watch_tomorrow_hw(message):
 				text = homework.split(',', 1)[1]
 
 				send += f"{lesson.capitalize()}: {text}\n"
-			print(f"CHECK: {send}")
 			if send == f"Дз на {date}:\n\n":
 				send = "На завтра ничего не задано"
 			bot.send_message(message.from_user.id, send)
