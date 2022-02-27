@@ -314,6 +314,9 @@ def sender(message):
 	elif mes[0] == "Матвею":
 		id = 867731219
 		send = mes[1]
+	elif mes[0] == "Егорке":
+		id = 424081503
+		send = mes[1]
 	elif message.from_user.id != 813519084:
 		id = 813519084
 		send = str(message.from_user.id) + ": " + message.text
@@ -329,6 +332,7 @@ id-шники:
 	478903479 - Лерчик
 	867731219 - Матвей
 	813519084 - Я
+	424081503 - Егорка
 """
 
 bot.polling(none_stop=True)
