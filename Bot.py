@@ -64,7 +64,7 @@ def help(message):
 •Чтобы стереть все домашние задания, выберите в меню пункт \"Стереть все записи\" или напишите боту /delete_all 
 """)
 
-@bot.message_handler(commands=['mathematics', 'physics', 'biology', 'chemistry', 'it', 'geography', 'russian', 'literature', 'history', 'english', 'law', 'social_sciense', 'economics', 'psychology', 'lsf'])
+@bot.message_handler(commands=['mathematics', 'physics', 'biology', 'chemistry', 'it', 'geography', 'russian', 'literature', 'history', 'english', 'law', 'social_scienсe', 'economics', 'psychology', 'lsf'])
 def subject(message):
 
 	global subject
@@ -98,7 +98,7 @@ def buttons(call):
 def watch_subject(message):
 	names = {'mathematics': "Математика", 'physics': "Физика", 'biology': "Биология", 'chemistry': "Химия",
 			 'it': "Информатика", 'geography': "География", 'russian': "Русский язык", 'literature': "Литература",
-			 'history': "История", 'english': "Английский язык", 'law': "Право", 'social_sciense': "Обществознание",
+			 'history': "История", 'english': "Английский язык", 'law': "Право", 'social_scienсe': "Обществознание",
 			 'economics': "Экономика", 'psychology': "Психология", 'lsf': "ОБЖ"}
 	try:
 		date = datetime.strptime(message.text, "%d.%m.%y").date()
@@ -128,7 +128,7 @@ def watch_subject(message):
 def write_subject(message):
 	names = {'mathematics': "Математика", 'physics': "Физика", 'biology': "Биология", 'chemistry': "Химия",
 			 'it': "Информатика", 'geography': "География", 'russian': "Русский язык", 'literature': "Литература",
-			 'history': "История", 'english': "Английский язык", 'law': "Право", 'social_sciense': "Обществознание",
+			 'history': "История", 'english': "Английский язык", 'law': "Право", 'social_scienсe': "Обществознание",
 			 'economics': "Экономика", 'psychology': "Психология", 'lsf': "ОБЖ"}
 	homework_id = rand()
 	try:
@@ -159,7 +159,7 @@ def write_subject(message):
 def delete_subject(message):
 	names = {'mathematics': "Математика", 'physics': "Физика", 'biology': "Биология", 'chemistry': "Химия",
 			 'it': "Информатика", 'geography': "География", 'russian': "Русский язык", 'literature': "Литература",
-			 'history': "История", 'english': "Английский язык", 'law': "Право", 'social_sciense': "Обществознание",
+			 'history': "История", 'english': "Английский язык", 'law': "Право", 'social_scienсe': "Обществознание",
 			 'economics': "Экономика", 'psychology': "Психология", 'lsf': "ОБЖ"}
 	try:
 		date = datetime.strptime(message.text, "%d.%m.%y").date()
@@ -178,7 +178,7 @@ def delete_subject(message):
 def show_all(message):
 	names = {'mathematics': "Математика", 'physics': "Физика", 'biology': "Биология", 'chemistry': "Химия",
 			 'it': "Информатика", 'geography': "География", 'russian': "Русский язык", 'literature': "Литература",
-			 'history': "История", 'english': "Английский язык", 'law': "Право", 'social_sciense': "Обществознание",
+			 'history': "История", 'english': "Английский язык", 'law': "Право", 'social_scienсe': "Обществознание",
 			 'economics': "Экономика", 'psychology': "Психология", 'lsf': "ОБЖ"}
 	dates = []
 	start = 1
@@ -236,7 +236,7 @@ def watch_tomorrow_hw(message):
 	try:
 		names = {'mathematics': "Математика", 'physics': "Физика", 'biology': "Биология", 'chemistry': "Химия",
 				 'it': "Информатика", 'geography': "География", 'russian': "Русский язык", 'literature': "Литература",
-				 'history': "История", 'english': "Английский язык", 'law': "Право", 'social_sciense': "Обществознание",
+				 'history': "История", 'english': "Английский язык", 'law': "Право", 'social_scienсe': "Обществознание",
 				 'economics': "Экономика", 'psychology': "Психология", 'lsf': "ОБЖ"}
 
 		date = datetime.today().date() + timedelta(days=1)
@@ -317,9 +317,12 @@ def sender(message):
 	elif mes[0] == "Егорке":
 		id = 424081503
 		send = mes[1]
+	elif mes[0] == "Льву":
+		id = 346827563
+		send = mes[1]
 	elif message.from_user.id != 813519084:
 		id = 813519084
-		send = str(message.from_user.id) + ": " + message.text
+		send = str(message.from_user.id) + ": " + message
 		bot.send_message(message.from_user.id, "Бот реагирует только на команды и кнопки")
 	else:
 		return 0
@@ -334,5 +337,10 @@ id-шники:
 	813519084 - Я
 	424081503 - Егорка
 """
+
+'''
+Добавить форматирование текста всякими __ **
+Заменить везде при выводе даты на дни недели
+'''
 
 bot.polling(none_stop=True)
