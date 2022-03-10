@@ -268,7 +268,7 @@ def watch_tomorrow_hw(message):
 				text = homework.split(',', 1)[1]
 
 				send += f"{lesson.capitalize()}: {text}\n"
-			if send == f"Дз на {day_of_week[str(date.weekday())]} ({date}):\n\n"
+			if send == f"Дз на {day_of_week[str(date.weekday())]} ({date}):\n\n":
 				send = "На завтра ничего не задано"
 			bot.send_message(message.from_user.id, send)
 
