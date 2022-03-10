@@ -100,6 +100,8 @@ def watch_subject(message):
 			 'it': "Информатика", 'geography': "География", 'russian': "Русский язык", 'literature': "Литература",
 			 'history': "История", 'english': "Английский язык", 'law': "Право", 'social_scienсe': "Обществознание",
 			 'economics': "Экономика", 'psychology': "Психология", 'lsf': "ОБЖ"}
+	day_of_week = {'0': "Понедельник", '1': "Вторник", '2': "Среду", '3': "Четверг", '4': "Пятницу", '5': "Субботу",
+				   '6': "Воскресенье"}
 	try:
 		date = datetime.strptime(message.text, "%d.%m.%y").date()
 		cursor.execute(f"SELECT homework_id FROM tg_homework WHERE user_id = %s", [message.from_user.id])
@@ -117,7 +119,7 @@ def watch_subject(message):
 		if hw_text == []:
 			bot.send_message(message.from_user.id, "Ничего не задано")
 		else:
-			bot.send_message(message.from_user.id, f"Дз на {date}:")
+			bot.send_message(message.from_user.id, f"Дз на {day_of_week[str(date.weekday())]} ({date}):")
 			for text in hw_text:
 				bot.send_message(message.from_user.id, text[0])
 	except(Exception, psycopg2.Error) as error:
@@ -180,6 +182,8 @@ def show_all(message):
 			 'it': "Информатика", 'geography': "География", 'russian': "Русский язык", 'literature': "Литература",
 			 'history': "История", 'english': "Английский язык", 'law': "Право", 'social_scienсe': "Обществознание",
 			 'economics': "Экономика", 'psychology': "Психология", 'lsf': "ОБЖ"}
+	day_of_week = {'0': "Понедельник", '1': "Вторник", '2': "Среду", '3': "Четверг", '4': "Пятницу", '5': "Субботу",
+				   '6': "Воскресенье"}
 	dates = []
 	start = 1
 	today = datetime.today().date().weekday()
@@ -206,7 +210,7 @@ def show_all(message):
 				homeworks = cursor.fetchall()
 			else:
 				homeworks = []
-			send += f"Дз на {date}:\n"
+			send += f"Дз на {day_of_week[str(date.weekday())]} ({date}):\n"
 			for lesson_hw in homeworks:
 				send += f"\t\t\t•{lesson_hw[0].capitalize()}: {lesson_hw[1]}\n"
 			if homeworks == []:
@@ -238,6 +242,8 @@ def watch_tomorrow_hw(message):
 				 'it': "Информатика", 'geography': "География", 'russian': "Русский язык", 'literature': "Литература",
 				 'history': "История", 'english': "Английский язык", 'law': "Право", 'social_scienсe': "Обществознание",
 				 'economics': "Экономика", 'psychology': "Психология", 'lsf': "ОБЖ"}
+		day_of_week = {'0': "Понедельник", '1': "Вторник", '2': "Среду", '3': "Четверг", '4': "Пятницу", '5': "Субботу",
+					   '6': "Воскресенье"}
 
 		date = datetime.today().date() + timedelta(days=1)
 		if date.weekday() == 6:
@@ -255,7 +261,7 @@ def watch_tomorrow_hw(message):
 			cursor.execute("SELECT (lesson_name, hw_text) FROM homework WHERE homework_id IN %s AND hw_date = %s;", [homework_ids, date])
 			bad_tomorrow_homework = cursor.fetchall()
 			tomorrow_homework = tuple(hw[0] for hw in bad_tomorrow_homework)
-			send = f"Дз на {date}:\n\n"
+			send = f"Дз на {day_of_week[str(date.weekday())]} ({date}):\n\n"
 			for homework in tomorrow_homework:
 				homework = homework[1:-1]
 				lesson = homework.split(',', 1)[0]
